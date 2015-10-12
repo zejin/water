@@ -1,0 +1,17 @@
+#!/bin/sh -l
+
+#PBS -l nodes=1:ppn=24
+#PBS -l walltime=0:30:00
+#PBS -N shallow
+#PBS -j oe
+
+module load cs5220
+cd $PBS_O_WORKDIR
+
+amplxe-cl -collect advanced-hotspots \
+./shallow -i dam_break -o dam_break.out
+amplxe-cl -collect advanced-hotspots \
+./shallow -i wave -o wave.out -F 100
+
+python visualizer.py dam_break.out dam_break.mp4 dam_break.png
+python visualizer.py wave.out wave.mp4 wave.png
