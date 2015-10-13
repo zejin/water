@@ -287,13 +287,8 @@ void Central2D<Physics, Limiter>::compute_fg_speeds(real& cx_, real& cy_)
 template <class Physics, class Limiter>
 void Central2D<Physics, Limiter>::limited_derivs()
 {
-    int ixy, ix, iy;
-    #pragma omp parallel private(ixy, ix, iy) 
-    {
-        #pragma omp for nowait
-        for (ixy = 0; ixy < (nx_all-2)*(ny_all-2); ++ixy) {
-            ix = ixy % (nx_all-2) + 1;
-            iy = ixy / (nx_all-2) + 1;
+    for (int iy = 1; iy < ny_all-1; ++iy)
+        for (int ix = 1; ix < nx_all-1; ++ix) {
 
             // x derivs
             limdiff( ux(ix,iy), u(ix-1,iy), u(ix,iy), u(ix+1,iy) );
@@ -303,7 +298,6 @@ void Central2D<Physics, Limiter>::limited_derivs()
             limdiff( uy(ix,iy), u(ix,iy-1), u(ix,iy), u(ix,iy+1) );
             limdiff( gy(ix,iy), g(ix,iy-1), g(ix,iy), g(ix,iy+1) );
         }
-    }
 }
 
 

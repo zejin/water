@@ -1,8 +1,5 @@
 #!/bin/sh
 
-cd ~/water-zejin
-
-module load cs5220
 module load maqao
 
 amplxe-cl -report hotspots -r r000ah/ > amplxe.txt
