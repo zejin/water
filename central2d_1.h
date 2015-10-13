@@ -290,7 +290,7 @@ void Central2D<Physics, Limiter>::limited_derivs()
     int ixy, ix, iy;
     #pragma omp parallel private(ixy, ix, iy) 
     {
-        #pragma omp for nowait
+        #pragma omp for
         for (ixy = 0; ixy < (nx_all-2)*(ny_all-2); ++ixy) {
             ix = ixy % (nx_all-2) + 1;
             iy = ixy / (nx_all-2) + 1;
