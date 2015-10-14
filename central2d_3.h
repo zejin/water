@@ -350,25 +350,26 @@ void Central2D<Physics, Limiter>::compute_step(int io, real dt)
                 }
                 Physics::flux(f(ix,iy), g(ix,iy), uh);
             }
-    }
-
-    // Corrector (finish the step)
-    for (int iy = nghost-io; iy < ny+nghost-io; ++iy)
-        for (int ix = nghost-io; ix < nx+nghost-io; ++ix) {
-            for (int m = 0; m < v(ix,iy).size(); ++m) {
-                v(ix,iy)[m] =
-                    0.2500 * ( u(ix,  iy)[m] + u(ix+1,iy  )[m] +
-                               u(ix,iy+1)[m] + u(ix+1,iy+1)[m] ) -
-                    0.0625 * ( ux(ix+1,iy  )[m] - ux(ix,iy  )[m] +
-                               ux(ix+1,iy+1)[m] - ux(ix,iy+1)[m] +
-                               uy(ix,  iy+1)[m] - uy(ix,  iy)[m] +
-                               uy(ix+1,iy+1)[m] - uy(ix+1,iy)[m] ) -
-                    dtcdx2 * ( f(ix+1,iy  )[m] - f(ix,iy  )[m] +
-                               f(ix+1,iy+1)[m] - f(ix,iy+1)[m] ) -
-                    dtcdy2 * ( g(ix,  iy+1)[m] - g(ix,  iy)[m] +
-                               g(ix+1,iy+1)[m] - g(ix+1,iy)[m] );
+        
+        #pragma omp for
+        // Corrector (finish the step)
+        for (iy = nghost-io; iy < ny+nghost-io; ++iy)
+            for (ix = nghost-io; ix < nx+nghost-io; ++ix) {
+                for (m = 0; m < v(ix,iy).size(); ++m) {
+                    v(ix,iy)[m] =
+                        0.2500 * ( u(ix,  iy)[m] + u(ix+1,iy  )[m] +
+                                   u(ix,iy+1)[m] + u(ix+1,iy+1)[m] ) -
+                        0.0625 * ( ux(ix+1,iy  )[m] - ux(ix,iy  )[m] +
+                                   ux(ix+1,iy+1)[m] - ux(ix,iy+1)[m] +
+                                   uy(ix,  iy+1)[m] - uy(ix,  iy)[m] +
+                                   uy(ix+1,iy+1)[m] - uy(ix+1,iy)[m] ) -
+                        dtcdx2 * ( f(ix+1,iy  )[m] - f(ix,iy  )[m] +
+                                   f(ix+1,iy+1)[m] - f(ix,iy+1)[m] ) -
+                        dtcdy2 * ( g(ix,  iy+1)[m] - g(ix,  iy)[m] +
+                                   g(ix+1,iy+1)[m] - g(ix+1,iy)[m] );
+                }
             }
-        }
+    }
 
     // Copy from v storage back to main grid
     for (int j = nghost; j < ny+nghost; ++j){

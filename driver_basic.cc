@@ -91,16 +91,14 @@ int main(int argc, char** argv)
 {
     std::string fname = "waves.out";
     std::string ic = "dam_break";
-    std::string scale = "weak";
     int    nx = 200;
     double width = 2.0;
     double ftime = 0.01;
     int    frames = 50;
-    int    nthr = 1;
-
+    
     int c;
     extern char* optarg;
-    while ((c = getopt(argc, argv, "hi:o:n:w:F:f:t:s:")) != -1) {
+    while ((c = getopt(argc, argv, "hi:o:n:w:F:f:")) != -1) {
         switch (c) {
         case 'h':
             fprintf(stderr,
@@ -111,11 +109,9 @@ int main(int argc, char** argv)
                     "\t-n: number of cells per side (%d)\n"
                     "\t-w: domain width in cells (%g)\n"
                     "\t-f: time between frames (%g)\n"
-                    "\t-F: number of frames (%d)\n"
-		    "\t-t: number of threads (%d)\n"
-		    "\t-s: scaling (%s)\n",
+                    "\t-F: number of frames (%d)\n",
                     argv[0], ic.c_str(), fname.c_str(), 
-                    nx, width, ftime, frames, nthr, scale.c_str());
+                    nx, width, ftime, frames);
             return -1;
         case 'i':  ic     = optarg;          break;
         case 'o':  fname  = optarg;          break;
@@ -123,8 +119,6 @@ int main(int argc, char** argv)
         case 'w':  width  = atof(optarg);    break;
         case 'f':  ftime  = atof(optarg);    break;
         case 'F':  frames = atoi(optarg);    break;
-	case 't':  nthr   = atoi(optarg);    break;
-	case 's':  scale  = optarg;          break;  
         default:
             fprintf(stderr, "Unknown option (-%c)\n", c);
             return -1;
@@ -149,25 +143,16 @@ int main(int argc, char** argv)
     sim.init(icfun);
     sim.solution_check();
     viz.write_frame();
-    
-    std::string fs("timing_" + scale + "_" + std::to_string(nthr) + ".csv");
-    FILE* fp;
-    fp = fopen(fs.c_str(), "w");
-    double tt = 0;
-
-    fprintf(fp, "nthreads,ncells,time\n");
     for (int i = 0; i < frames; ++i) {
 #ifdef _OPENMP
         double t0 = omp_get_wtime();
         sim.run(ftime);
         double t1 = omp_get_wtime();
         printf("Time: %e\n", t1-t0);
-	tt += t1 - t0;
 #else
         sim.run(ftime);
 #endif
         sim.solution_check();
         viz.write_frame();
     }
-    fprintf(fp, "%d,%d,%e\n", nthr, nx, tt);
 }
