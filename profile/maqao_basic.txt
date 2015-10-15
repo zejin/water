@@ -3,14 +3,14 @@ Section 1: Function: Central2D<Shallow2D, MinMod<float> >::compute_step(int, flo
 
 These loops are supposed to be defined in: /home/zj58/water-zejin/central2d.h
 
-Section 1.1: Source loop ending at line 349
+Section 1.1: Source loop ending at line 338
 ===========================================
 
 Composition and unrolling
 -------------------------
-It is composed of the loop 25
+It is composed of the loop 26
 and is not unrolled or unrolled with no peel/tail code (including vectorization).
-The analysis will be displayed for the first found loop: 25
+The analysis will be displayed for the first found loop: 26
 
 Type of elements and instruction set
 ------------------------------------
@@ -65,14 +65,14 @@ Bottlenecks
 The ROB-read stage is a bottleneck.
 By removing all these bottlenecks, you can lower the cost of an iteration from 13.25 to 12.00 cycles (1.10x speedup).
 
-Section 1.2: Source loop ending at line 369
+Section 1.2: Source loop ending at line 357
 ===========================================
 
 Composition and unrolling
 -------------------------
-It is composed of the loop 23
+It is composed of the loop 24
 and is not unrolled or unrolled with no peel/tail code (including vectorization).
-The analysis will be displayed for the first found loop: 23
+The analysis will be displayed for the first found loop: 24
 
 Type of elements and instruction set
 ------------------------------------
@@ -128,14 +128,14 @@ Try to reduce the number of FP add instructions.
 
 By removing all these bottlenecks, you can lower the cost of an iteration from 54.00 to 40.50 cycles (1.33x speedup).
 
-Section 1.3: Source loop ending at line 780
+Section 1.3: Source loop ending at line 364
 ===========================================
 
 Composition and unrolling
 -------------------------
-It is composed of the loop 27
+It is composed of the loop 22
 and is not unrolled or unrolled with no peel/tail code (including vectorization).
-The analysis will be displayed for the first found loop: 27
+The analysis will be displayed for the first found loop: 22
 
 Type of elements and instruction set
 ------------------------------------
@@ -148,13 +148,13 @@ Only 12% of vector length is used.
 Matching between your loop (in the source code) and the binary loop
 -------------------------------------------------------------------
 The binary loop does not contain any FP arithmetical operations.
-The binary loop is loading 24 bytes.
-The binary loop is storing 24 bytes.
+The binary loop is loading 12 bytes.
+The binary loop is storing 12 bytes.
 
 
 Cycles and resources usage
 --------------------------
-Assuming all data fit into the L1 cache, each iteration of the binary loop takes 6.00 cycles. At this rate:
+Assuming all data fit into the L1 cache, each iteration of the binary loop takes 3.00 cycles. At this rate:
  - 6% of peak load performance is reached (4.00 out of 64.00 bytes loaded per cycle (GB/s @ 1GHz))
  - 12% of peak store performance is reached (4.00 out of 32.00 bytes stored per cycle (GB/s @ 1GHz))
 
@@ -162,7 +162,7 @@ Pathological cases
 ------------------
 Your loop is processing FP elements but is NOT OR PARTIALLY VECTORIZED and could benefit from full vectorization.
 Since your execution units are vector units, only a fully vectorized loop can use their full power.
-By fully vectorizing your loop, you can lower the cost of an iteration from 6.00 to 0.75 cycles (8.00x speedup).
+By fully vectorizing your loop, you can lower the cost of an iteration from 3.00 to 0.75 cycles (4.00x speedup).
 Two propositions:
  - Try another compiler or update/tune your current one:
   * Intel: use the vec-report option to understand why your loop was not vectorized. If "existence of vector dependences", try the IVDEP directive. If, using IVDEP, "vectorization possible but seems inefficient", try the VECTOR ALWAYS directive.
@@ -177,7 +177,7 @@ Try to reduce the number of stores.
 For example, provide more information to your compiler:
  - hardcode the bounds of the corresponding 'for' loop,
 
-By removing all these bottlenecks, you can lower the cost of an iteration from 6.00 to 3.25 cycles (1.85x speedup).
+By removing all these bottlenecks, you can lower the cost of an iteration from 3.00 to 2.25 cycles (1.33x speedup).
 
 
 All innermost loops were analyzed.

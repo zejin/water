@@ -2,7 +2,7 @@
 
 ncells=200
 
-for nthreads in {1..9}
+for nthreads in {1..8}
 do
 file="strong_${nthreads}.pbs"
 

@@ -264,24 +264,14 @@ void Central2D<Physics, Limiter>::compute_fg_speeds(real& cx_, real& cy_)
     using namespace std;
     real cx = 1.0e-15;
     real cy = 1.0e-15;
-    
-    int iy, ix;
-    real cell_cx, cell_cy;
-    #pragma omp parallel shared(cx, cy) private(iy, ix, cell_cx, cell_cy) 
-    {
-        #pragma omp for
-        for (int iy = 0; iy < ny_all; ++iy)
-            for (int ix = 0; ix < nx_all; ++ix) {
-                Physics::flux(f(ix,iy), g(ix,iy), u(ix,iy));
-                Physics::wave_speed(cell_cx, cell_cy, u(ix,iy));
-                
-		#pragma omp critical
-		{
-		cx = max(cx, cell_cx);
-                cy = max(cy, cell_cy);
-		}
-            }
-    }
+    for (int iy = 0; iy < ny_all; ++iy)
+        for (int ix = 0; ix < nx_all; ++ix) {
+            real cell_cx, cell_cy;
+	    Physics::flux(f(ix,iy), g(ix,iy), u(ix,iy));
+	    Physics::wave_speed(cell_cx, cell_cy, u(ix,iy));
+	    cx = max(cx, cell_cx);
+	    cy = max(cy, cell_cy);
+	}
     cx_ = cx;
     cy_ = cy;
 }
@@ -297,21 +287,22 @@ void Central2D<Physics, Limiter>::compute_fg_speeds(real& cx_, real& cy_)
 template <class Physics, class Limiter>
 void Central2D<Physics, Limiter>::limited_derivs()
 {
-    int iy, ix;
+    int ixy, iy, ix;
     #pragma omp parallel private(iy, ix)
     {
         #pragma omp for
-        for (iy = 1; iy < ny_all-1; ++iy)
-            for (ix = 1; ix < nx_all-1; ++ix) {
+        for (ixy = 0; ixy < (nx_all-2)*(ny_all-2); ++ixy) {
+  	    ix = ixy % (nx_all-2) + 1;
+	    iy = ixy / (nx_all-2) + 1;
 
-                // x derivs
-                limdiff( ux(ix,iy), u(ix-1,iy), u(ix,iy), u(ix+1,iy) );
-                limdiff( fx(ix,iy), f(ix-1,iy), f(ix,iy), f(ix+1,iy) );
+	    // x derivs
+	    limdiff( ux(ix,iy), u(ix-1,iy), u(ix,iy), u(ix+1,iy) );
+	    limdiff( fx(ix,iy), f(ix-1,iy), f(ix,iy), f(ix+1,iy) );
 
-                // y derivs
-                limdiff( uy(ix,iy), u(ix,iy-1), u(ix,iy), u(ix,iy+1) );
-                limdiff( gy(ix,iy), g(ix,iy-1), g(ix,iy), g(ix,iy+1) );
-	    }
+	    // y derivs
+	    limdiff( uy(ix,iy), u(ix,iy-1), u(ix,iy), u(ix,iy+1) );
+	    limdiff( gy(ix,iy), g(ix,iy-1), g(ix,iy), g(ix,iy+1) );
+	}   
     }
 }
 

@@ -8,7 +8,7 @@ LOOP BEGIN at central2d.h(211,9) inlined into driver.cc(149,9)
    remark #15523: loop was not vectorized: cannot compute loop iteration count before executing the loop.
 LOOP END
 
-LOOP BEGIN at central2d.h(442,9) inlined into driver.cc(150,9)
+LOOP BEGIN at central2d.h(443,9) inlined into driver.cc(150,9)
    remark #15520: loop was not vectorized: loop with early exits cannot be vectorized unless it meets search loop idiom criteria
 LOOP END
 
@@ -20,7 +20,7 @@ LOOP BEGIN at meshio.h(59,37) inlined into driver.cc(151,9)
    LOOP END
 LOOP END
 
-LOOP BEGIN at central2d.h(442,9) inlined into driver.cc(169,13)
+LOOP BEGIN at central2d.h(443,9) inlined into driver.cc(169,13)
    remark #15520: loop was not vectorized: loop with early exits cannot be vectorized unless it meets search loop idiom criteria
 LOOP END
 
@@ -44,14 +44,14 @@ LOOP BEGIN at central2d.h(210,5) inlined into driver.cc(149,9)
    remark #15341: loop was not vectorized: nonstandard loop is not a vectorization candidate
 LOOP END
 
-LOOP BEGIN at central2d.h(441,5) inlined into driver.cc(150,9)
+LOOP BEGIN at central2d.h(442,5) inlined into driver.cc(150,9)
    remark #15341: loop was not vectorized: nonstandard loop is not a vectorization candidate
 LOOP END
 
 LOOP BEGIN at driver.cc(159,5)
    remark #15536: loop was not vectorized: inner loop throttling prevents vectorization of this outer loop. Refer to inner loop message for more details.
 
-   LOOP BEGIN at central2d.h(441,5) inlined into driver.cc(169,13)
+   LOOP BEGIN at central2d.h(442,5) inlined into driver.cc(169,13)
       remark #15341: loop was not vectorized: nonstandard loop is not a vectorization candidate
    LOOP END
 LOOP END
@@ -62,35 +62,35 @@ Begin optimization report for: Central2D<Shallow2D, MinMod<Shallow2D::real>>::ru
     Report from: Vector optimizations [vec]
 
 
-LOOP BEGIN at central2d.h(402,5)
+LOOP BEGIN at central2d.h(403,5)
    remark #15523: loop was not vectorized: cannot compute loop iteration count before executing the loop.
 
-   LOOP BEGIN at central2d.h(404,9)
-      remark #15382: vectorization support: call to function Central2D<Shallow2D, MinMod<Shallow2D::real>>::compute_fg_speeds(Central2D<Shallow2D, MinMod<Shallow2D::real>> *, Central2D<Shallow2D, MinMod<Shallow2D::real>>::real &, Central2D<Shallow2D, MinMod<Shallow2D::real>>::real &) cannot be vectorized   [ central2d.h(407,13) ]
-      remark #15382: vectorization support: call to function Central2D<Shallow2D, MinMod<Shallow2D::real>>::limited_derivs(Central2D<Shallow2D, MinMod<Shallow2D::real>> *) cannot be vectorized   [ central2d.h(408,13) ]
-      remark #15382: vectorization support: call to function Central2D<Shallow2D, MinMod<Shallow2D::real>>::compute_step(Central2D<Shallow2D, MinMod<Shallow2D::real>> *, int, Central2D<Shallow2D, MinMod<Shallow2D::real>>::real) cannot be vectorized   [ central2d.h(416,13) ]
+   LOOP BEGIN at central2d.h(405,9)
+      remark #15382: vectorization support: call to function Central2D<Shallow2D, MinMod<Shallow2D::real>>::compute_fg_speeds(Central2D<Shallow2D, MinMod<Shallow2D::real>> *, Central2D<Shallow2D, MinMod<Shallow2D::real>>::real &, Central2D<Shallow2D, MinMod<Shallow2D::real>>::real &) cannot be vectorized   [ central2d.h(408,13) ]
+      remark #15382: vectorization support: call to function Central2D<Shallow2D, MinMod<Shallow2D::real>>::limited_derivs(Central2D<Shallow2D, MinMod<Shallow2D::real>> *) cannot be vectorized   [ central2d.h(409,13) ]
+      remark #15382: vectorization support: call to function Central2D<Shallow2D, MinMod<Shallow2D::real>>::compute_step(Central2D<Shallow2D, MinMod<Shallow2D::real>> *, int, Central2D<Shallow2D, MinMod<Shallow2D::real>>::real) cannot be vectorized   [ central2d.h(417,13) ]
       remark #15344: loop was not vectorized: vector dependence prevents vectorization
-      remark #15346: vector dependence: assumed OUTPUT dependence between cx line 405 and cy line 407
-      remark #15346: vector dependence: assumed OUTPUT dependence between cy line 407 and cx line 405
+      remark #15346: vector dependence: assumed OUTPUT dependence between cx line 406 and cy line 408
+      remark #15346: vector dependence: assumed OUTPUT dependence between cy line 408 and cx line 406
 
-      LOOP BEGIN at central2d.h(236,5) inlined into central2d.h(407,13)
+      LOOP BEGIN at central2d.h(236,5) inlined into central2d.h(408,13)
          remark #15344: loop was not vectorized: vector dependence prevents vectorization
          remark #15346: vector dependence: assumed OUTPUT dependence between _M_elems line 238 and _M_elems line 239
          remark #15346: vector dependence: assumed OUTPUT dependence between _M_elems line 239 and _M_elems line 238
 
-         LOOP BEGIN at central2d.h(237,9) inlined into central2d.h(407,13)
+         LOOP BEGIN at central2d.h(237,9) inlined into central2d.h(408,13)
             remark #15344: loop was not vectorized: vector dependence prevents vectorization
             remark #15346: vector dependence: assumed OUTPUT dependence between _M_elems line 238 and _M_elems line 239
             remark #15346: vector dependence: assumed OUTPUT dependence between _M_elems line 239 and _M_elems line 238
          LOOP END
       LOOP END
 
-      LOOP BEGIN at central2d.h(243,5) inlined into central2d.h(407,13)
+      LOOP BEGIN at central2d.h(243,5) inlined into central2d.h(408,13)
          remark #15344: loop was not vectorized: vector dependence prevents vectorization
          remark #15346: vector dependence: assumed OUTPUT dependence between _M_elems line 245 and _M_elems line 246
          remark #15346: vector dependence: assumed OUTPUT dependence between _M_elems line 246 and _M_elems line 245
 
-         LOOP BEGIN at central2d.h(244,9) inlined into central2d.h(407,13)
+         LOOP BEGIN at central2d.h(244,9) inlined into central2d.h(408,13)
             remark #15344: loop was not vectorized: vector dependence prevents vectorization
             remark #15346: vector dependence: assumed OUTPUT dependence between _M_elems line 245 and _M_elems line 246
             remark #15346: vector dependence: assumed OUTPUT dependence between _M_elems line 246 and _M_elems line 245
@@ -124,24 +124,20 @@ Begin optimization report for: Central2D<Shallow2D, MinMod<Shallow2D::real>>::li
 
 
 LOOP BEGIN at central2d.h(294,9)
-   remark #15541: outer loop was not auto-vectorized: consider using SIMD directive
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed ANTI dependence between this line 167 and _M_elems line 183
+   remark #15346: vector dependence: assumed FLOW dependence between _M_elems line 183 and this line 167
 
-   LOOP BEGIN at central2d.h(295,13)
-      remark #15344: loop was not vectorized: vector dependence prevents vectorization
-      remark #15346: vector dependence: assumed ANTI dependence between this line 167 and _M_elems line 183
-      remark #15346: vector dependence: assumed FLOW dependence between _M_elems line 183 and this line 167
+   LOOP BEGIN at central2d.h(182,20) inlined into central2d.h(300,6)
+   LOOP END
 
-      LOOP BEGIN at central2d.h(182,20) inlined into central2d.h(299,17)
-      LOOP END
+   LOOP BEGIN at central2d.h(182,20) inlined into central2d.h(301,6)
+   LOOP END
 
-      LOOP BEGIN at central2d.h(182,20) inlined into central2d.h(300,17)
-      LOOP END
+   LOOP BEGIN at central2d.h(182,20) inlined into central2d.h(304,6)
+   LOOP END
 
-      LOOP BEGIN at central2d.h(182,20) inlined into central2d.h(303,17)
-      LOOP END
-
-      LOOP BEGIN at central2d.h(182,20) inlined into central2d.h(304,17)
-      LOOP END
+   LOOP BEGIN at central2d.h(182,20) inlined into central2d.h(305,6)
    LOOP END
 LOOP END
 ===========================================================================
@@ -151,51 +147,51 @@ Begin optimization report for: Central2D<Shallow2D, MinMod<Shallow2D::real>>::co
     Report from: Vector optimizations [vec]
 
 
-LOOP BEGIN at central2d.h(375,5)
+LOOP BEGIN at central2d.h(376,5)
    remark #15344: loop was not vectorized: vector dependence prevents vectorization
-   remark #15346: vector dependence: assumed ANTI dependence between this line 377 and _M_elems line 377
-   remark #15346: vector dependence: assumed FLOW dependence between _M_elems line 377 and this line 377
+   remark #15346: vector dependence: assumed ANTI dependence between this line 378 and _M_elems line 378
+   remark #15346: vector dependence: assumed FLOW dependence between _M_elems line 378 and this line 378
 
-   LOOP BEGIN at central2d.h(376,9)
+   LOOP BEGIN at central2d.h(377,9)
       remark #15344: loop was not vectorized: vector dependence prevents vectorization
-      remark #15346: vector dependence: assumed ANTI dependence between this line 377 and _M_elems line 377
-      remark #15346: vector dependence: assumed FLOW dependence between _M_elems line 377 and this line 377
+      remark #15346: vector dependence: assumed ANTI dependence between this line 378 and _M_elems line 378
+      remark #15346: vector dependence: assumed FLOW dependence between _M_elems line 378 and this line 378
    LOOP END
 
-   LOOP BEGIN at central2d.h(376,9)
+   LOOP BEGIN at central2d.h(377,9)
    <Remainder>
    LOOP END
 LOOP END
 
-LOOP BEGIN at central2d.h(344,9)
+LOOP BEGIN at central2d.h(345,9)
    remark #15344: loop was not vectorized: vector dependence prevents vectorization
-   remark #15346: vector dependence: assumed ANTI dependence between this line 346 and _M_elems line 80
-   remark #15346: vector dependence: assumed FLOW dependence between _M_elems line 80 and this line 346
+   remark #15346: vector dependence: assumed ANTI dependence between this line 347 and _M_elems line 80
+   remark #15346: vector dependence: assumed FLOW dependence between _M_elems line 80 and this line 347
 
-   LOOP BEGIN at central2d.h(345,13)
+   LOOP BEGIN at central2d.h(346,13)
       remark #15344: loop was not vectorized: vector dependence prevents vectorization
-      remark #15346: vector dependence: assumed ANTI dependence between this line 346 and _M_elems line 80
-      remark #15346: vector dependence: assumed FLOW dependence between _M_elems line 80 and this line 346
+      remark #15346: vector dependence: assumed ANTI dependence between this line 347 and _M_elems line 80
+      remark #15346: vector dependence: assumed FLOW dependence between _M_elems line 80 and this line 347
 
-      LOOP BEGIN at central2d.h(347,17)
+      LOOP BEGIN at central2d.h(348,17)
       LOOP END
    LOOP END
 LOOP END
 
-LOOP BEGIN at central2d.h(356,9)
+LOOP BEGIN at central2d.h(357,9)
    remark #15344: loop was not vectorized: vector dependence prevents vectorization
-   remark #15346: vector dependence: assumed OUTPUT dependence between this line 359 and this line 359
-   remark #15346: vector dependence: assumed OUTPUT dependence between this line 359 and this line 359
+   remark #15346: vector dependence: assumed OUTPUT dependence between this line 360 and this line 360
+   remark #15346: vector dependence: assumed OUTPUT dependence between this line 360 and this line 360
 
-   LOOP BEGIN at central2d.h(357,13)
+   LOOP BEGIN at central2d.h(358,13)
       remark #15344: loop was not vectorized: vector dependence prevents vectorization
-      remark #15346: vector dependence: assumed FLOW dependence between this line 359 and this line 359
-      remark #15346: vector dependence: assumed ANTI dependence between this line 359 and this line 359
+      remark #15346: vector dependence: assumed FLOW dependence between this line 360 and this line 360
+      remark #15346: vector dependence: assumed ANTI dependence between this line 360 and this line 360
 
-      LOOP BEGIN at central2d.h(358,42)
+      LOOP BEGIN at central2d.h(359,42)
          remark #15344: loop was not vectorized: vector dependence prevents vectorization
-         remark #15346: vector dependence: assumed FLOW dependence between this line 359 and this line 359
-         remark #15346: vector dependence: assumed ANTI dependence between this line 359 and this line 359
+         remark #15346: vector dependence: assumed FLOW dependence between this line 360 and this line 360
+         remark #15346: vector dependence: assumed ANTI dependence between this line 360 and this line 360
       LOOP END
    LOOP END
 LOOP END
