@@ -264,14 +264,24 @@ void Central2D<Physics, Limiter>::compute_fg_speeds(real& cx_, real& cy_)
     using namespace std;
     real cx = 1.0e-15;
     real cy = 1.0e-15;
-    for (int iy = 0; iy < ny_all; ++iy)
-        for (int ix = 0; ix < nx_all; ++ix) {
-            real cell_cx, cell_cy;
-            Physics::flux(f(ix,iy), g(ix,iy), u(ix,iy));
-            Physics::wave_speed(cell_cx, cell_cy, u(ix,iy));
-            cx = max(cx, cell_cx);
-            cy = max(cy, cell_cy);
-        }
+    
+    int iy, ix;
+    real cell_cx, cell_cy;
+    #pragma omp parallel shared(cx, cy) private(iy, ix, cell_cx, cell_cy) 
+    {
+        #pragma omp for
+        for (int iy = 0; iy < ny_all; ++iy)
+            for (int ix = 0; ix < nx_all; ++ix) {
+                Physics::flux(f(ix,iy), g(ix,iy), u(ix,iy));
+                Physics::wave_speed(cell_cx, cell_cy, u(ix,iy));
+                
+		#pragma omp critical
+		{
+		cx = max(cx, cell_cx);
+                cy = max(cy, cell_cy);
+		}
+            }
+    }
     cx_ = cx;
     cy_ = cy;
 }
@@ -334,34 +344,42 @@ void Central2D<Physics, Limiter>::compute_step(int io, real dt)
     real dtcdx2 = 0.5 * dt / dx;
     real dtcdy2 = 0.5 * dt / dy;
 
-    // Predictor (flux values of f and g at half step)
-    for (int iy = 1; iy < ny_all-1; ++iy)
-        for (int ix = 1; ix < nx_all-1; ++ix) {
-            vec uh = u(ix,iy);
-            for (int m = 0; m < uh.size(); ++m) {
-                uh[m] -= dtcdx2 * fx(ix,iy)[m];
-                uh[m] -= dtcdy2 * gy(ix,iy)[m];
-            }
-            Physics::flux(f(ix,iy), g(ix,iy), uh);
-        }
+    int iy, ix, m;
+    vec uh;
 
-    // Corrector (finish the step)
-    for (int iy = nghost-io; iy < ny+nghost-io; ++iy)
-        for (int ix = nghost-io; ix < nx+nghost-io; ++ix) {
-            for (int m = 0; m < v(ix,iy).size(); ++m) {
-                v(ix,iy)[m] =
-                    0.2500 * ( u(ix,  iy)[m] + u(ix+1,iy  )[m] +
-                               u(ix,iy+1)[m] + u(ix+1,iy+1)[m] ) -
-                    0.0625 * ( ux(ix+1,iy  )[m] - ux(ix,iy  )[m] +
-                               ux(ix+1,iy+1)[m] - ux(ix,iy+1)[m] +
-                               uy(ix,  iy+1)[m] - uy(ix,  iy)[m] +
-                               uy(ix+1,iy+1)[m] - uy(ix+1,iy)[m] ) -
-                    dtcdx2 * ( f(ix+1,iy  )[m] - f(ix,iy  )[m] +
-                               f(ix+1,iy+1)[m] - f(ix,iy+1)[m] ) -
-                    dtcdy2 * ( g(ix,  iy+1)[m] - g(ix,  iy)[m] +
-                               g(ix+1,iy+1)[m] - g(ix+1,iy)[m] );
+    #pragma omp parallel private(iy, ix, uh, m)
+    {
+        #pragma omp for
+        // Predictor (flux values of f and g at half step)
+        for (iy = 1; iy < ny_all-1; ++iy)
+            for (ix = 1; ix < nx_all-1; ++ix) {
+                uh = u(ix,iy);
+                for (m = 0; m < uh.size(); ++m) {
+                    uh[m] -= dtcdx2 * fx(ix,iy)[m];
+                    uh[m] -= dtcdy2 * gy(ix,iy)[m];
+                }
+                Physics::flux(f(ix,iy), g(ix,iy), uh);
             }
-        }
+        
+        #pragma omp for
+        // Corrector (finish the step)
+        for (iy = nghost-io; iy < ny+nghost-io; ++iy)
+            for (ix = nghost-io; ix < nx+nghost-io; ++ix) {
+                for (m = 0; m < v(ix,iy).size(); ++m) {
+                    v(ix,iy)[m] =
+                        0.2500 * ( u(ix,  iy)[m] + u(ix+1,iy  )[m] +
+                                   u(ix,iy+1)[m] + u(ix+1,iy+1)[m] ) -
+                        0.0625 * ( ux(ix+1,iy  )[m] - ux(ix,iy  )[m] +
+                                   ux(ix+1,iy+1)[m] - ux(ix,iy+1)[m] +
+                                   uy(ix,  iy+1)[m] - uy(ix,  iy)[m] +
+                                   uy(ix+1,iy+1)[m] - uy(ix+1,iy)[m] ) -
+                        dtcdx2 * ( f(ix+1,iy  )[m] - f(ix,iy  )[m] +
+                                   f(ix+1,iy+1)[m] - f(ix,iy+1)[m] ) -
+                        dtcdy2 * ( g(ix,  iy+1)[m] - g(ix,  iy)[m] +
+                                   g(ix+1,iy+1)[m] - g(ix+1,iy)[m] );
+                }
+            }
+    }
 
     // Copy from v storage back to main grid
     for (int j = nghost; j < ny+nghost; ++j){

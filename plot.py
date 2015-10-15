@@ -20,7 +20,7 @@ def make_plot(runs, scale):
             temp = pd.read_csv("central2d_" + str(arg) + "/timing_" + scale + "_" + str(i + 1) + ".csv")
             df_arg = df_arg.append(temp, ignore_index = True)
 
-        plt.plot(df_arg.nthreads, df_basic.time / df_arg.time, label = 'OpenMP')
+        plt.plot(df_arg.nthreads, df_basic.time / df_arg.time, label = 'OpenMP'+ str(arg))
         plt.title(scale + " scaling study")
         plt.xlabel('Number of threads')
         plt.ylabel('Speedup')
