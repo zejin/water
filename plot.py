@@ -11,13 +11,13 @@ def make_plot(runs, scale):
     "Plot results of timing trials"
     df_basic = pd.DataFrame()
     for i in range(8):
-        temp = pd.read_csv("central2d_basic/timing_" + scale + "_" + str(i + 1) + ".csv")
+        temp = pd.read_csv("basic/timing_" + scale + "_" + str(i + 1) + ".csv")
         df_basic = df_basic.append(temp, ignore_index = True)
 
     for arg in runs:
         df_arg = pd.DataFrame()
         for i in range(8):
-            temp = pd.read_csv("central2d_" + str(arg) + "/timing_" + scale + "_" + str(i + 1) + ".csv")
+            temp = pd.read_csv(str(arg) + "/timing_" + scale + "_" + str(i + 1) + ".csv")
             df_arg = df_arg.append(temp, ignore_index = True)
 
         plt.plot(df_arg.nthreads, df_basic.time / df_arg.time, label = 'version '+ str(arg))
