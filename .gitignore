@@ -2,6 +2,8 @@
 *.png
 *.mp4
 
+*.o
+
 shallow
 shallow.o*
 
