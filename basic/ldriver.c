@@ -238,7 +238,7 @@ int run_sim(lua_State* L)
 
     FILE* fp;
     fp = fopen(fs, "w");
-    fprintf(fp, "nthreads,ncells,time\n");
+    fprintf(fp, "nthread,ncell,time\n");
 
     double tcompute = 0;
     for (int i = 0; i < frames; ++i) {

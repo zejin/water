@@ -20,7 +20,7 @@ def make_plot(runs, scale):
             temp = pd.read_csv(str(arg) + "/timing_" + scale + "_" + str((i + 1)**2) + ".csv")
             df_arg = df_arg.append(temp, ignore_index = True)
 
-        plt.plot(df_arg.nthreads, df_basic.time / df_arg.time, label = 'version '+ str(arg))
+        plt.plot(df_arg.nthread, df_basic.time / df_arg.time, label = 'version '+ str(arg))
         plt.title(scale + " scaling study")
         plt.xlabel('number of threads')
         plt.ylabel('speedup')

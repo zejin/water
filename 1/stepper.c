@@ -418,36 +418,46 @@ int central2d_xrun(float* restrict u, float* restrict v,
             int thread_id = omp_get_thread_num();
             
             for(int k = 0; k < nfield; ++k) {
-                memcpy(u_block[thread_id]+k*nx_all*(2*NUM_BATCH+block_size), u+k*nx_all*ny_all+nx_all*(block_size*thread_id), 
+                memcpy(u_block[thread_id]+k*nx_all*(2*NUM_BATCH+block_size), 
+		       u+k*nx_all*ny_all+nx_all*(block_size*thread_id), 
                        nx_all*(2*NUM_BATCH+block_size)*sizeof(float));
-                memcpy(v_block[thread_id]+k*nx_all*(2*NUM_BATCH+block_size), v+k*nx_all*ny_all+nx_all*(block_size*thread_id), 
+                memcpy(v_block[thread_id]+k*nx_all*(2*NUM_BATCH+block_size), 
+		       v+k*nx_all*ny_all+nx_all*(block_size*thread_id), 
                        nx_all*(2*NUM_BATCH+block_size)*sizeof(float));
-                memcpy(f_block[thread_id]+k*nx_all*(2*NUM_BATCH+block_size), f+k*nx_all*ny_all+nx_all*(block_size*thread_id), 
+                memcpy(f_block[thread_id]+k*nx_all*(2*NUM_BATCH+block_size), 
+		       f+k*nx_all*ny_all+nx_all*(block_size*thread_id), 
                        nx_all*(2*NUM_BATCH+block_size)*sizeof(float));
-                memcpy(g_block[thread_id]+k*nx_all*(2*NUM_BATCH+block_size), g+k*nx_all*ny_all+nx_all*(block_size*thread_id), 
+                memcpy(g_block[thread_id]+k*nx_all*(2*NUM_BATCH+block_size), 
+		       g+k*nx_all*ny_all+nx_all*(block_size*thread_id), 
                        nx_all*(2*NUM_BATCH+block_size)*sizeof(float));
             }   
             #pragma omp barrier
 
             for(int j = 0; j < NUM_BATCH / 2; ++j) {
-                central2d_step(u_block[thread_id], v_block[thread_id], scr_block[thread_id], f_block[thread_id], g_block[thread_id],
+                central2d_step(u_block[thread_id], v_block[thread_id], scr_block[thread_id], 
+			       f_block[thread_id], g_block[thread_id],
                                0, nx+2*(NUM_BATCH-1-j*2), block_size+2*(NUM_BATCH-1-j*2), 1+j*2,
                                nfield, flux, speed,
                                dt, dx, dy);
-                central2d_step(u_block[thread_id], v_block[thread_id], scr_block[thread_id], f_block[thread_id], g_block[thread_id],
+                central2d_step(u_block[thread_id], v_block[thread_id], scr_block[thread_id], 
+			       f_block[thread_id], g_block[thread_id],
                                1, nx+2*(NUM_BATCH-2-j*2), block_size+2*(NUM_BATCH-2-j*2), 2+j*2,
                                nfield, flux, speed,
                                dt, dx, dy);
             }
 
             for(int k = 0;k<nfield;++k) {
-                memcpy(u+k*nx_all*ny_all+nx_all*(ng+block_size*thread_id), u_block[thread_id]+k*nx_all*(2*NUM_BATCH+block_size)+NUM_BATCH*nx_all, 
+                memcpy(u+k*nx_all*ny_all+nx_all*(ng+block_size*thread_id), 
+		       u_block[thread_id]+k*nx_all*(2*NUM_BATCH+block_size)+NUM_BATCH*nx_all, 
                        nx_all*block_size*sizeof(float));
-                memcpy(v+k*nx_all*ny_all+nx_all*(ng+block_size*thread_id), v_block[thread_id]+k*nx_all*(2*NUM_BATCH+block_size)+NUM_BATCH*nx_all, 
+                memcpy(v+k*nx_all*ny_all+nx_all*(ng+block_size*thread_id), 
+		       v_block[thread_id]+k*nx_all*(2*NUM_BATCH+block_size)+NUM_BATCH*nx_all, 
                        nx_all*block_size*sizeof(float));
-                memcpy(f+k*nx_all*ny_all+nx_all*(ng+block_size*thread_id), f_block[thread_id]+k*nx_all*(2*NUM_BATCH+block_size)+NUM_BATCH*nx_all, 
+                memcpy(f+k*nx_all*ny_all+nx_all*(ng+block_size*thread_id), 
+		       f_block[thread_id]+k*nx_all*(2*NUM_BATCH+block_size)+NUM_BATCH*nx_all, 
                        nx_all*block_size*sizeof(float));
-                memcpy(g+k*nx_all*ny_all+nx_all*(ng+block_size*thread_id), g_block[thread_id]+k*nx_all*(2*NUM_BATCH+block_size)+NUM_BATCH*nx_all, 
+                memcpy(g+k*nx_all*ny_all+nx_all*(ng+block_size*thread_id), 
+		       g_block[thread_id]+k*nx_all*(2*NUM_BATCH+block_size)+NUM_BATCH*nx_all, 
                        nx_all*block_size*sizeof(float));
             }
             #pragma omp barrier
