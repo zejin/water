@@ -338,6 +338,7 @@ void Central2D<Physics, Limiter>::compute_step(int io, real dt)
     for (int iy = 1; iy < ny_all-1; ++iy)
         for (int ix = 1; ix < nx_all-1; ++ix) {
             vec uh = u(ix,iy);
+	    #pragma ivdep
             for (int m = 0; m < uh.size(); ++m) {
                 uh[m] -= dtcdx2 * fx(ix,iy)[m];
                 uh[m] -= dtcdy2 * gy(ix,iy)[m];
