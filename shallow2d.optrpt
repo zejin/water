@@ -1,0 +1,66 @@
+
+Begin optimization report for: shallow2d_flux(float *, float *, const float *, int, int)
+
+    Report from: Vector optimizations [vec]
+
+
+LOOP BEGIN at shallow2d.c(36,5) inlined into shallow2d.c(74,5)
+<Peeled>
+LOOP END
+
+LOOP BEGIN at shallow2d.c(36,5) inlined into shallow2d.c(74,5)
+   remark #15389: vectorization support: reference U has unaligned access   [ shallow2d.c(37,20) ]
+   remark #15389: vectorization support: reference hu has unaligned access   [ shallow2d.c(37,32) ]
+   remark #15389: vectorization support: reference hv has unaligned access   [ shallow2d.c(37,45) ]
+   remark #15389: vectorization support: reference fhu has unaligned access   [ shallow2d.c(39,9) ]
+   remark #15389: vectorization support: reference fhv has unaligned access   [ shallow2d.c(40,9) ]
+   remark #15389: vectorization support: reference ghu has unaligned access   [ shallow2d.c(41,9) ]
+   remark #15389: vectorization support: reference ghv has unaligned access   [ shallow2d.c(42,9) ]
+   remark #15381: vectorization support: unaligned access used inside loop body
+   remark #15300: LOOP WAS VECTORIZED
+   remark #15442: entire loop may be executed in remainder
+   remark #15450: unmasked unaligned unit stride loads: 3 
+   remark #15451: unmasked unaligned unit stride stores: 4 
+   remark #15475: --- begin vector loop cost summary ---
+   remark #15476: scalar loop cost: 86 
+   remark #15477: vector loop cost: 11.620 
+   remark #15478: estimated potential speedup: 5.830 
+   remark #15479: lightweight vector operations: 54 
+   remark #15488: --- end vector loop cost summary ---
+LOOP END
+
+LOOP BEGIN at shallow2d.c(36,5) inlined into shallow2d.c(74,5)
+<Remainder>
+LOOP END
+===========================================================================
+
+Begin optimization report for: shallow2d_speed(float *, const float *, int, int)
+
+    Report from: Vector optimizations [vec]
+
+
+LOOP BEGIN at shallow2d.c(57,5) inlined into shallow2d.c(84,5)
+<Peeled>
+LOOP END
+
+LOOP BEGIN at shallow2d.c(57,5) inlined into shallow2d.c(84,5)
+   remark #15389: vectorization support: reference U has unaligned access   [ shallow2d.c(58,20) ]
+   remark #15389: vectorization support: reference U has unaligned access   [ shallow2d.c(59,29) ]
+   remark #15389: vectorization support: reference hu has unaligned access   [ shallow2d.c(61,45) ]
+   remark #15389: vectorization support: reference hv has unaligned access   [ shallow2d.c(62,45) ]
+   remark #15381: vectorization support: unaligned access used inside loop body
+   remark #15300: LOOP WAS VECTORIZED
+   remark #15442: entire loop may be executed in remainder
+   remark #15450: unmasked unaligned unit stride loads: 3 
+   remark #15475: --- begin vector loop cost summary ---
+   remark #15476: scalar loop cost: 117 
+   remark #15477: vector loop cost: 12.750 
+   remark #15478: estimated potential speedup: 6.810 
+   remark #15479: lightweight vector operations: 40 
+   remark #15488: --- end vector loop cost summary ---
+LOOP END
+
+LOOP BEGIN at shallow2d.c(57,5) inlined into shallow2d.c(84,5)
+<Remainder>
+LOOP END
+===========================================================================

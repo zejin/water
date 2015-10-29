@@ -1,0 +1,98 @@
+
+Begin optimization report for: main(int, char **)
+
+    Report from: Vector optimizations [vec]
+
+
+LOOP BEGIN at ldriver.c(298,5)
+   remark #15382: vectorization support: call to function lua_pushstring(lua_State *, const char *) cannot be vectorized   [ ldriver.c(299,9) ]
+   remark #15382: vectorization support: call to function lua_rawseti(lua_State *, int, lua_Integer) cannot be vectorized   [ ldriver.c(300,9) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+LOOP END
+===========================================================================
+
+Begin optimization report for: run_sim(lua_State *)
+
+    Report from: Vector optimizations [vec]
+
+
+LOOP BEGIN at ldriver.c(47,5) inlined into ldriver.c(227,5)
+   remark #15382: vectorization support: call to function central2d_offset(central2d_t *, int, int, int) cannot be vectorized   [ ldriver.c(49,25) ]
+   remark #15382: vectorization support: call to function central2d_offset(central2d_t *, int, int, int) cannot be vectorized   [ ldriver.c(51,25) ]
+   remark #15382: vectorization support: call to function central2d_offset(central2d_t *, int, int, int) cannot be vectorized   [ ldriver.c(52,25) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between  line 49 and  line 52
+   remark #15346: vector dependence: assumed OUTPUT dependence between  line 52 and  line 49
+
+   LOOP BEGIN at ldriver.c(48,9) inlined into ldriver.c(227,5)
+      remark #15382: vectorization support: call to function central2d_offset(central2d_t *, int, int, int) cannot be vectorized   [ ldriver.c(49,25) ]
+      remark #15382: vectorization support: call to function central2d_offset(central2d_t *, int, int, int) cannot be vectorized   [ ldriver.c(51,25) ]
+      remark #15382: vectorization support: call to function central2d_offset(central2d_t *, int, int, int) cannot be vectorized   [ ldriver.c(52,25) ]
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   LOOP END
+LOOP END
+
+LOOP BEGIN at ldriver.c(93,9) inlined into ldriver.c(228,5)
+   remark #15523: loop was not vectorized: cannot compute loop iteration count before executing the loop.
+LOOP END
+
+LOOP BEGIN at ldriver.c(245,5)
+   remark #15520: loop was not vectorized: loop with early exits cannot be vectorized unless it meets search loop idiom criteria
+
+   LOOP BEGIN at ldriver.c(47,5) inlined into ldriver.c(261,9)
+      remark #15382: vectorization support: call to function central2d_offset(central2d_t *, int, int, int) cannot be vectorized   [ ldriver.c(49,25) ]
+      remark #15382: vectorization support: call to function central2d_offset(central2d_t *, int, int, int) cannot be vectorized   [ ldriver.c(51,25) ]
+      remark #15382: vectorization support: call to function central2d_offset(central2d_t *, int, int, int) cannot be vectorized   [ ldriver.c(52,25) ]
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed OUTPUT dependence between  line 49 and  line 52
+      remark #15346: vector dependence: assumed OUTPUT dependence between  line 52 and  line 49
+
+      LOOP BEGIN at ldriver.c(48,9) inlined into ldriver.c(261,9)
+         remark #15382: vectorization support: call to function central2d_offset(central2d_t *, int, int, int) cannot be vectorized   [ ldriver.c(49,25) ]
+         remark #15382: vectorization support: call to function central2d_offset(central2d_t *, int, int, int) cannot be vectorized   [ ldriver.c(51,25) ]
+         remark #15382: vectorization support: call to function central2d_offset(central2d_t *, int, int, int) cannot be vectorized   [ ldriver.c(52,25) ]
+         remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      LOOP END
+   LOOP END
+
+   LOOP BEGIN at ldriver.c(93,9) inlined into ldriver.c(264,9)
+      remark #15523: loop was not vectorized: cannot compute loop iteration count before executing the loop.
+   LOOP END
+LOOP END
+===========================================================================
+
+Begin optimization report for: lua_init_sim(lua_State *, central2d_t *)
+
+    Report from: Vector optimizations [vec]
+
+
+LOOP BEGIN at ldriver.c(172,5)
+   remark #15382: vectorization support: call to function lua_pushvalue(lua_State *, int) cannot be vectorized   [ ldriver.c(176,13) ]
+   remark #15382: vectorization support: call to function lua_pushnumber(lua_State *, lua_Number) cannot be vectorized   [ ldriver.c(177,13) ]
+   remark #15382: vectorization support: call to function lua_pushnumber(lua_State *, lua_Number) cannot be vectorized   [ ldriver.c(178,13) ]
+   remark #15382: vectorization support: call to function lua_callk(lua_State *, int, int, lua_KContext, lua_KFunction) cannot be vectorized   [ ldriver.c(179,13) ]
+   remark #15382: vectorization support: call to function lua_tonumberx(lua_State *, int, int *) cannot be vectorized   [ ldriver.c(181,52) ]
+   remark #15382: vectorization support: call to function central2d_offset(central2d_t *, int, int, int) cannot be vectorized   [ ldriver.c(181,19) ]
+   remark #15382: vectorization support: call to function lua_settop(lua_State *, int) cannot be vectorized   [ ldriver.c(182,13) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between  line 176 and  line 182
+   remark #15346: vector dependence: assumed OUTPUT dependence between  line 182 and  line 176
+
+   LOOP BEGIN at ldriver.c(174,9)
+      remark #15382: vectorization support: call to function lua_pushvalue(lua_State *, int) cannot be vectorized   [ ldriver.c(176,13) ]
+      remark #15382: vectorization support: call to function lua_pushnumber(lua_State *, lua_Number) cannot be vectorized   [ ldriver.c(177,13) ]
+      remark #15382: vectorization support: call to function lua_pushnumber(lua_State *, lua_Number) cannot be vectorized   [ ldriver.c(178,13) ]
+      remark #15382: vectorization support: call to function lua_callk(lua_State *, int, int, lua_KContext, lua_KFunction) cannot be vectorized   [ ldriver.c(179,13) ]
+      remark #15382: vectorization support: call to function lua_tonumberx(lua_State *, int, int *) cannot be vectorized   [ ldriver.c(181,52) ]
+      remark #15382: vectorization support: call to function central2d_offset(central2d_t *, int, int, int) cannot be vectorized   [ ldriver.c(181,19) ]
+      remark #15382: vectorization support: call to function lua_settop(lua_State *, int) cannot be vectorized   [ ldriver.c(182,13) ]
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+
+      LOOP BEGIN at ldriver.c(180,13)
+         remark #15382: vectorization support: call to function lua_tonumberx(lua_State *, int, int *) cannot be vectorized   [ ldriver.c(181,52) ]
+         remark #15382: vectorization support: call to function central2d_offset(central2d_t *, int, int, int) cannot be vectorized   [ ldriver.c(181,19) ]
+         remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      LOOP END
+   LOOP END
+LOOP END
+===========================================================================
