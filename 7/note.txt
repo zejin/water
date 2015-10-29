@@ -1,0 +1,7 @@
+Add simd in compute_fg_sppeds
+	Get loop vectorized: potential speed up 3.84
+Add simd in compute_derivs
+	Failure: vector dependnce
+
+Add all possible compiler flags
+Add ultimate set of compiler flags
