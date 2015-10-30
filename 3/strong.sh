@@ -15,11 +15,11 @@ echo "module load cs5220" >> $file
 echo "cd \$PBS_O_WORKDIR" >> $file
 
 echo "echo 'strong scaling'">> $file
-echo "echo 'number of threads: $nthreads'" >> $file
+echo "echo 'number of threads: $((nthreads*nthreads))'" >> $file
 echo "echo 'number of cells: $ncells'" >> $file
 
-echo "export OMP_NUM_THREADS=$nthreads" >> $file
-echo "./lshallow tests.lua dam $ncells $nthreads strong" >> $file
+echo "export OMP_NUM_THREADS=$((nthreads*nthreads))" >> $file
+echo "./shallow -i dam_break -o dam_break.out -n $ncells -t $((nthreads*nthreads)) -s strong" >> $file
 
 qsub $file
 rm $file

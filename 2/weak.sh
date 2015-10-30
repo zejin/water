@@ -15,11 +15,11 @@ echo "module load cs5220" >> $file
 echo "cd \$PBS_O_WORKDIR" >> $file
 
 echo "echo 'weak scaling'">> $file
-echo "echo 'number of threads: $nthreads'" >> $file
+echo "echo 'number of threads: $((nthreads*nthreads))'" >> $file
 echo "echo 'number of cells: $((ncells*nthreads))'" >> $file
 
-echo "export OMP_NUM_THREADS=$nthreads" >> $file
-echo "./shallow -i dam_break -o dam_break.out -n $((ncells*nthreads)) -t $nthreads -s weak" >> $file
+echo "export OMP_NUM_THREADS=$((nthreads*nthreads))" >> $file
+echo "./shallow -i dam_break -o dam_break.out -n $((ncells*nthreads)) -t $((nthreads*nthreads)) -s weak" >> $file
 
 qsub $file
 rm $file
