@@ -25,6 +25,7 @@ def make_plot(runs, scale):
         plt.xlabel('number of threads')
         plt.ylabel('speedup')
 
+
 def show(runs):
     "Show plot of timing runs (for interactive use)"
     make_plot(runs)
